@@ -13,15 +13,23 @@ class ContractController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required', 'exists:contracts,institution'],
+            'interval' => ['sometimes', 'in:1,3,6,12']
         ]);
 
         $institution = Contract::where('institution', '=', $request->name)->limit('1')->first();
 
+        $timeFilter = 1;
+
+        if ($request->has('interval')) {
+            $timeFilter = $request->interval;
+        }
+
+
         $contractsCount = Contract::where('institution', '=', $request->name)
-            ->whereDate('opened_at', '>=', Carbon::today()->subMonths(3))->count();
+            ->whereDate('opened_at', '>=', Carbon::today()->subMonths($timeFilter))->count();
 
         $contracts = Contract::where('institution', '=', $request->name)
-            ->whereDate('opened_at', '>=', Carbon::today()->subMonths(3))->paginate();
+            ->whereDate('opened_at', '>=', Carbon::today()->subMonths($timeFilter))->paginate();
 
         $response = [
             "dependence" => [
