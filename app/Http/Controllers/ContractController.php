@@ -33,12 +33,12 @@ class ContractController extends Controller
             ->whereDate('opened_at', '>=', Carbon::today()->subMonths($timeFilter))->paginate();
 
         $stats = DB::table('contracts')
-            ->select(DB::raw("count(*) as contracts, TO_CHAR(published_at, 'Mon') as month, SUM (contract_amount) AS total"))
+            ->select(DB::raw("count(*) as contracts, TO_CHAR(published_at, 'YYYY-MM-Mon') as month, SUM (contract_amount) AS total"))
             ->where('institution', '=', $request->name)
             ->whereNotNull('published_at')
             ->whereDate('published_at', '>=', Carbon::today()->subMonths($timeFilter))
             ->groupBy('month')
-            ->orderBy('month', 'desc')
+            ->orderBy('month')
             ->get();
 
         $contractTypes = DB::table('contracts')
