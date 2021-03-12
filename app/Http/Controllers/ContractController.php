@@ -26,17 +26,31 @@ class ContractController extends Controller
 
 
         $contractsCount = Contract::where('institution', '=', $request->name)
-            ->whereDate('opened_at', '>=', Carbon::today()->subMonths($timeFilter))->count();
+            ->whereNotNull('published_at')
+            ->whereDate('published_at', '>=', Carbon::today()->subMonths($timeFilter))->count();
 
         $contracts = Contract::where('institution', '=', $request->name)
             ->whereDate('opened_at', '>=', Carbon::today()->subMonths($timeFilter))->paginate();
 
         $stats = DB::table('contracts')
             ->select(DB::raw("count(*) as contracts, TO_CHAR(published_at, 'Mon') as month, SUM (contract_amount) AS total"))
+            ->where('institution', '=', $request->name)
             ->whereNotNull('published_at')
             ->whereDate('published_at', '>=', Carbon::today()->subMonths($timeFilter))
             ->groupBy('month')
+            ->orderBy('month', 'desc')
             ->get();
+
+        $contractTypes = DB::table('contracts')
+            ->select(DB::raw("count(*) as contracts, lower(procedure_type) as procedure"))
+            ->where('institution', '=', $request->name)
+            ->whereNotNull('published_at')
+            ->whereNotNull('procedure_type')
+            ->whereDate('published_at', '>=', Carbon::today()->subMonths($timeFilter))
+            ->groupBy(['procedure'])
+            ->get();
+
+
 
         $response = [
             "dependence" => [
@@ -44,7 +58,8 @@ class ContractController extends Controller
                 "acronyms" => $institution->acronyms,
                 "contracts_count" =>  $contractsCount,
                 "contracts" => $contracts,
-                "stats" => $stats
+                "stats" => $stats,
+                "contact_types" => $contractTypes
             ]
         ];
         return $response;
