@@ -15,7 +15,7 @@ class CreateContractsTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->string('acronyms')->nullable()->default(null);
+            $table->string('acronyms')->index()->nullable()->default(null);
             $table->string('institution')->index()->nullable()->default(null);
             $table->string('uc_name')->nullable()->default(null);
             $table->string('responsible_uc')->nullable()->default(null);
