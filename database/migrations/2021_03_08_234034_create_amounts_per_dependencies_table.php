@@ -15,7 +15,9 @@ class CreateAmountsPerDependenciesTable extends Migration
     {
         Schema::create('amounts_per_dependencies', function (Blueprint $table) {
             $table->id();
-            $table->string('acronym')->index();
+            $table->string('acronyms')->index()->nullable();
+            $table->string('institution')->nullable();
+            $table->string('uc')->nullable();
             $table->string('currency')->nullable();
             $table->date('date')->nullable();
             $table->float('import')->nullable();

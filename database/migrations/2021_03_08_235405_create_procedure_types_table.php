@@ -15,7 +15,7 @@ class CreateProcedureTypesTable extends Migration
     {
         Schema::create('procedure_types', function (Blueprint $table) {
             $table->id();
-            $table->string('type')->nullable();
+            $table->string('type')->index()->nullable();
             $table->integer('count')->nullable();
         });
     }

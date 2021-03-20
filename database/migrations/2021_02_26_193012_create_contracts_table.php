@@ -16,7 +16,7 @@ class CreateContractsTable extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
             $table->string('acronyms')->index()->nullable()->default(null);
-            $table->string('institution')->index()->nullable()->default(null);
+            $table->string('institution')->nullable()->default(null);
             $table->string('uc_name')->nullable()->default(null);
             $table->string('responsible_uc')->nullable()->default(null);
             $table->mediumText('folder_title')->nullable()->default(null);
@@ -26,7 +26,7 @@ class CreateContractsTable extends Migration
             $table->string('procedure_type')->nullable()->default(null);
             $table->string('contract_code')->nullable()->default(null);
             $table->mediumText('contract_title')->nullable()->default(null);
-            $table->date('contract_init_date')->nullable()->default(null);
+            $table->date('contract_init_date')->index()->nullable()->default(null);
             $table->date('contract_finish_date')->nullable()->default(null);
             $table->double('contract_amount', 16, 3)->nullable()->default(null);
             $table->string('currency', 4)->nullable()->default(null);
