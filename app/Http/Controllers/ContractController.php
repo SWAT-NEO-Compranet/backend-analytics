@@ -3,21 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
-use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Models\AmountsPerDependency;
+use App\Http\Requests\ContractsQueryRequest;
 
 class ContractController extends Controller
 {
-    public function show(Request $request)
+    public function show(ContractsQueryRequest $request)
     {
-        $request->validate([
-            'name' => ['required', 'exists:contracts,institution'],
-            'interval' => ['sometimes', 'in:1,3,6,12,24,48,60']
-        ]);
-
         $name = $request->name;
         $timeFilter = 1;
 
-        $institution = Contract::where('institution', '=', $request->name)->limit('1')->first();
+        $institution = Contract::where('acronyms', '=', $request->name)->limit('1')->first();
 
         if ($request->has('interval')) {
             $timeFilter = $request->interval;
@@ -42,8 +40,23 @@ class ContractController extends Controller
         return $response;
     }
 
-    public function contracts()
+    public function contractGenerals(ContractsQueryRequest $request)
     {
-        return 'this endpoint is currently in progress';
+        $response = Contract::stats()->default($request->name, $request->interval)->groupBy(['filter', 'month'])->orderBy('filter')->get();
+
+        return ["stats" => $response];
+    }
+
+    public function contractTypes(ContractsQueryRequest $request)
+    {
+        $response = Contract::types()->default($request->name, $request->interval)->groupBy(['procedure'])->get();
+        return ["contact_types" => $response];
+    }
+
+
+    public function contractCurrency(ContractsQueryRequest $request)
+    {
+        $response = Contract::currency()->default($request->name, $request->interval)->groupBy('currency')->get();
+        return ["contract_currencies" => $response];
     }
 }

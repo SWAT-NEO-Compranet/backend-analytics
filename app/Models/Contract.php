@@ -24,10 +24,10 @@ class Contract extends Model
     {
         return $query
             ->whereNotNull('acronyms')
-            ->whereNotNull('published_at')
+            ->whereNotNull('contract_init_date')
             ->whereNotNull('procedure_type')
-            ->where('institution', '=', $acronym)
-            ->whereDate('published_at', '>=', Carbon::today()->subMonths($interval));
+            ->where('acronyms', '=', $acronym)
+            ->whereDate('contract_init_date', '>=', Carbon::today()->subMonths($interval));
     }
 
     /**
@@ -40,7 +40,7 @@ class Contract extends Model
     {
         return $query
             ->select(
-                DB::raw("count(*) as contracts, TO_CHAR(published_at, 'YYYY-MM') as filter, TO_CHAR(published_at, 'Mon') as month, SUM (contract_amount) AS total")
+                DB::raw("count(*) as contracts, TO_CHAR(contract_init_date, 'YYYY-MM') as filter, TO_CHAR(contract_init_date, 'Mon') as month, SUM (contract_amount) AS total")
             );
     }
 
@@ -48,5 +48,10 @@ class Contract extends Model
     {
         return $query
             ->select(DB::raw("count(*) as contracts, lower(procedure_type) as procedure"));
+    }
+
+    public function scopeCurrency($query)
+    {
+        return $query->select(DB::raw('count(*) as contracts, currency'));
     }
 }

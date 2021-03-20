@@ -20,4 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('dependencies/details', [ContractController::class, 'show'])->name('dependencies.details');
-Route::get('contracts/details', [ContractController::class, 'contract'])->name('contracts.details');
+Route::post('stats/contracts/generals', [ContractController::class, 'contractGenerals'])->name('contracts.generals');
+Route::post('stats/contracts/types', [ContractController::class, 'contractTypes'])->name('contracts.types');
+Route::post('stats/contracts/currency', [ContractController::class, 'contractCurrency'])->name('contracts.currency');
