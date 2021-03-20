@@ -1,0 +1,397 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swat Analytics",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://neo-analytics-backend.herokuapp.com"
+        }
+    ],
+    "paths": {
+        "/api/dependencies/details": {
+            "post": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Dependence details",
+                "description": "Get the details for a given dependence",
+                "operationId": "App\\Http\\Controllers\\ContractController::show",
+                "requestBody": {
+                    "description": "Name for get the dependence details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "CFE"
+                                    },
+                                    "interval": {
+                                        "type": "number",
+                                        "example": "12"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong name or interval information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Comisión Federal de Electricidad."
+                                        },
+                                        "acronyms": {
+                                            "type": "string",
+                                            "example": "CFE"
+                                        },
+                                        "contracts_count": {
+                                            "type": "number",
+                                            "example": "1000"
+                                        },
+                                        "contracts": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "contact_types": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "stats": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "contracts": {
+                                                        "type": "number",
+                                                        "example": "500"
+                                                    },
+                                                    "filter": {
+                                                        "description": "Year and month",
+                                                        "type": "string",
+                                                        "example": "2018-03"
+                                                    },
+                                                    "month": {
+                                                        "description": "Month",
+                                                        "type": "string",
+                                                        "example": "May"
+                                                    },
+                                                    "total": {
+                                                        "description": "Total",
+                                                        "type": "string",
+                                                        "example": "2228520826.6436996"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        },
+                                        "contract_types": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "contracts": {
+                                                        "type": "number",
+                                                        "example": "500"
+                                                    },
+                                                    "procedure": {
+                                                        "description": "Procedure type",
+                                                        "type": "string",
+                                                        "example": "adjudicación directa federal"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/stats/contracts/generals": {
+            "post": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Dependence general stats",
+                "description": "Get the general statistics for a given dependence",
+                "operationId": "App\\Http\\Controllers\\ContractController::contractGenerals",
+                "requestBody": {
+                    "description": "Name for get the dependence details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "CFE"
+                                    },
+                                    "interval": {
+                                        "type": "number",
+                                        "example": "12"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong name or interval information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "stats": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "contracts": {
+                                                        "type": "number",
+                                                        "example": "500"
+                                                    },
+                                                    "filter": {
+                                                        "description": "Year and month",
+                                                        "type": "string",
+                                                        "example": "2018-03"
+                                                    },
+                                                    "month": {
+                                                        "description": "Month",
+                                                        "type": "string",
+                                                        "example": "May"
+                                                    },
+                                                    "total": {
+                                                        "description": "Total",
+                                                        "type": "string",
+                                                        "example": "2228520826.6436996"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/stats/contracts/types": {
+            "post": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Dependence type stats",
+                "description": "Get the statistics filtered by type for a given dependence",
+                "operationId": "App\\Http\\Controllers\\ContractController::contractTypes",
+                "requestBody": {
+                    "description": "Name for get the dependence details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "CFE"
+                                    },
+                                    "interval": {
+                                        "type": "number",
+                                        "example": "12"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "contract_types": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "contracts": {
+                                                        "type": "number",
+                                                        "example": "500"
+                                                    },
+                                                    "procedure": {
+                                                        "description": "Procedure type",
+                                                        "type": "string",
+                                                        "example": "adjudicación directa federal"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/stats/contracts/currency": {
+            "post": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Dependence currency stats",
+                "description": "Get the statistics filtered by currency for a given dependence",
+                "operationId": "App\\Http\\Controllers\\ContractController::contractCurrency",
+                "requestBody": {
+                    "description": "Name for get the dependence details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "CFE"
+                                    },
+                                    "interval": {
+                                        "type": "number",
+                                        "example": "12"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "contract_currencies": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "contracts": {
+                                                        "type": "number",
+                                                        "example": "500"
+                                                    },
+                                                    "currency": {
+                                                        "description": "Contracts currency",
+                                                        "type": "string",
+                                                        "example": "MXN"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
