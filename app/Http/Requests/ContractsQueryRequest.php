@@ -25,7 +25,7 @@ class ContractsQueryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'exists:contracts,acronyms'],
-            'interval' => ['sometimes', 'in:1,3,6,12,24,36,48,60']
+            'interval' => ['sometimes', 'in:1,3,6,12,24,36,48,60,72,84,96,108,120,132']
         ];
     }
 }
