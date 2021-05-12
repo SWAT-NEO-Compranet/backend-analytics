@@ -15,7 +15,7 @@ class CreateContractByDependencesTable extends Migration
     {
         Schema::create('contract_by_dependences', function (Blueprint $table) {
             $table->id();
-            $table->string('acronym')->index();
+            $table->string('acronym');
             $table->integer('institution_distinct');
             $table->integer('count');
             $table->integer('rank');
