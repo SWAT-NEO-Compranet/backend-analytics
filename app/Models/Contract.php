@@ -40,7 +40,7 @@ class Contract extends Model
     {
         return $query
             ->select(
-                DB::raw("count(*) as contracts, TO_CHAR(contract_init_date, 'YYYY-MM') as filter, TO_CHAR(contract_init_date, 'YYYY-Mon') as month, SUM (contract_amount) AS total")
+                DB::raw("count(*) as contracts, date_filter as filter, date_display as month, SUM (contract_amount) AS total")
             );
     }
 

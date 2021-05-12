@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDependenceDurationsTable extends Migration
+class AddDateFilterToContractsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateDependenceDurationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dependence_durations', function (Blueprint $table) {
-            $table->id();
-            $table->string('acronym');
-            $table->float('average', 20, 16)->nullable()->default(0);
-            $table->integer('count')->nullable();
+        Schema::table('contracts', function (Blueprint $table) {
+            $table->string('date_filter')->nullable()->index();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateDependenceDurationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dependence_durations');
+        Schema::table('contracts', function (Blueprint $table) {
+            $table->dropColumn('date_filter');
+        });
     }
 }
