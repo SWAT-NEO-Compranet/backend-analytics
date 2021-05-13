@@ -125,10 +125,10 @@ class ContractController extends Controller
         $contracts = Contract::default($name, $timeFilter)->paginate();
 
         if (config("app.env") == "production") {
-            // $contracts->setPath('https://neo-analytics-backend.herokuapp.com/api/dependencies/details');
+            $contracts->setPath('https://neo-analytics-backend.herokuapp.com/api/dependencies/details');
         }
 
-        $stats = Contract::stats()->default($name, $timeFilter)->groupBy(['filter', 'date_display'])->get();
+        $stats = Contract::stats()->default($name, $timeFilter)->groupBy(['filter', 'month'])->get();
 
         $contractTypes = Contract::types()->default($name, $timeFilter)->groupBy(['procedure'])->get();
 
